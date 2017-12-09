@@ -1,0 +1,74 @@
+# APIKey and ProjectID are required, EpicName is optional. If null, a DAG for
+# will be generated for the project id passed.
+PivotalSettings:
+  APIKey: foo
+  ProjectID: 0000
+  EpicName: null
+
+OutputSettings:
+  FileFormat: pdf
+  FilePath: graph_test.pdf
+
+# Description:
+# - GraphLabel, if null, defaults to "Graph For (epic_name || project_id)"
+# - Node/Rank Separation toggle how far apart nodes, and rows of nodes, are
+#   positioned, respectively.
+# - RankDirection toggles whether the DAG goes from top to bottom (TB) or
+#   left to right (LR, default)
+GraphSettings:
+  IncludeKey: true
+  GraphLabel: null
+  LabelLocation: t
+  FontSize: 60
+  FontType: Verdana
+  NodeSeparation: 2
+  RankSeparation: 2
+  RankDirection: LR
+
+# Default behavior (if setting is left as null):
+# - Height/Width: Scale by number of points on ticket
+# - Label: Story title, ID, Owner, and Number of Points (see PivotalDag$node_label)
+# - FontSize: Scaled by number of points on ticket to match height/width
+# - FillColor: Configred using the StatusColors settings
+# All other fields must be non-null
+NodeSettings:
+  Width: null
+  Height: null
+  IncludeURL: true
+  Label: null
+  FeatureAttributes:
+    Label: null
+    FontSize: null
+    FontType: Verdana
+    Style: filled
+    Shape: record
+    FillColor: null
+  BugAttributes:
+    Label: null
+    FontSize: null
+    FontType: Verdana
+    Style: filled
+    Shape: record
+    FillColor: red
+  ReleaseAttributes:
+    Label: null
+    FontSize: null
+    FontType: Verdana
+    Style: filled
+    Shape: circle
+    FillColor: null
+  ChoreAttributes:
+    Label: null
+    FontSize: null
+    FontType: Verdana
+    Style: filled
+    Shape: record
+    FillColor: null
+  StatusColors:
+    Unstarted: grey
+    StartedAndFinished: deepskyblue
+    Delivered: goldenrod
+    Accepted: mediumseagreen
+
+EdgeSettings:
+  ArrowSize: 3
