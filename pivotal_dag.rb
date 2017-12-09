@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 require "./pivotal_api_proxy"
-gem 'byebug'
-gem 'ruby-graphviz'
 require 'ruby-graphviz'
-require 'byebug'
 class PivotalDag
   attr_accessor :stories, :vertices, :dag
   def initialize(api_key:, project_id:, epic_name: nil, include_key: true)

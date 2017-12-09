@@ -1,7 +1,4 @@
 # frozen_string_literal: true
-require 'rubygems'
-gem 'httparty'
-gem 'json'
 require 'httparty'
 require 'json'
 class PivotalApiProxy
