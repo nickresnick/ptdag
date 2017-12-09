@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 require './pivotal_dag'
-config = YAML.load_file('./config.yml')
+# Need to use ERB to evaluate the FilePath field
+config = YAML.safe_load(ERB.new(File.read('./config.yml')).result)
 
 dag = PivotalDag.new(
   api_key: config['PivotalSettings']['APIKey'],

@@ -5,9 +5,10 @@ PivotalSettings:
   ProjectID: 0000
   EpicName: null
 
+# By default, append the year-month-day-hour-minute of generation to the file
 OutputSettings:
   FileFormat: pdf
-  FilePath: generated_dags/graph_test.pdf
+  FilePath: <%= "generated_dags/pivotal_dag_#{Time.now.strftime("%Y%m%d%H%M")}.pdf" %>
 
 # Description:
 # - GraphLabel, if null, defaults to "Graph For (epic_name || project_id)"
