@@ -9,7 +9,16 @@ class PivotalApiProxy
     @api_key = api_key
     @project_id = project_id
     @me = get("me")
-    @people = get("my/people?project_id=#{@project_id}") + [{ "person" => @me }]
+    if @me['code'] == "invalid_authentication"
+      raise "Error: Unrecognized API token: " + @me['possible_fix']
+    end
+
+    @people = get("my/people?project_id=#{@project_id}")
+    if @people['code'] == "unrecognized_operation"
+      raise "Error: Bad project ID: " + @pesona['possible_fix']
+    end
+
+    @people += [{ "person" => @me }]
   end
 
   def get(action, query = {})
