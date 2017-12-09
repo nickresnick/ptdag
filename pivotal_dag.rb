@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "./pivotal_api_proxy"
 gem 'byebug'
 gem 'ruby-graphviz'
@@ -5,24 +6,23 @@ require 'ruby-graphviz'
 require 'byebug'
 class PivotalDag
   attr_accessor :stories, :vertices, :dag
-  def initialize(api_key:, project_id:, epic_name: nil)
+  def initialize(api_key:, project_id:, epic_name: nil, include_key: true)
+    parse_config(YAML.load_file('./config.yml'))
     @proxy = PivotalApiProxy.new(api_key: api_key, project_id: project_id)
     @epic_name = epic_name
     @stories = @proxy.get_stories(@epic_name)
     @dag = GraphViz.new(
       :G,
-      {
-        type: :digraph,
-        label: "Graph for #{epic_name || @proxy.project_id}",
-        fontsize: 60,
-        labelloc: "t",
-        fontname: "Verdana",
-        nodesep: 2,
-        ranksep: 2,
-        rankdir: "LR"
-      },
+      type: :digraph,
+      label: @graph_settings['GraphLabel'] || "Graph for #{epic_name || @proxy.project_id}",
+      fontsize: @graph_settings['FontSize'],
+      labelloc: @graph_settings['LabelLocation'],
+      fontname: @graph_settings['Verdana'],
+      nodesep: @graph_settings['NodeSeparation'],
+      ranksep: @graph_settings['RankSeparation'],
+      rankdir: @graph_settings['RankDirection'],
     )
-    add_key
+    add_key if include_key
   end
 
   def get_blockers(story_id)
@@ -31,68 +31,32 @@ class PivotalDag
 
   def vertices
     @vertices ||= @stories.map do |story|
-      attributes = case story["story_type"]
-      when "feature"
-        feature_attributes(story)
-      when "chore"
-        chore_attributes(story)
-      when "bug"
-        bug_attributes(story)
-      when "release"
-        release_attributes(story)
-      end
+      attributes = node_attributes(story)
       @dag.add_node(
         story["id"].to_s,
-        attributes.merge(URL: story["url"], width: (story['estimate'] || 3) + 5, height: (story['estimate'] || 3) + 5),
+        attributes.merge(
+          URL: @node_settings['IncludeURL'] ? story["url"] : nil,
+          width: @node_settings['width'] || (story['estimate'] || 3) + 5,
+          height:  @node_settings['height'] || (story['estimate'] || 3) + 5,
+        ),
       )
     end
   end
 
-  def generate_dag
+  def generate_dag(file_format, file_path)
     vertices.each do |vertex|
       blockers = get_blockers(vertex.id)
       blockers.each do |blocker|
         @dag.add_edges(
           vertices.find { |v| v.id == blocker["description"][1..-1] },
-          vertex,
-          {
-            arrowsize: 3,
-          }
+          vertex, arrowsize: @edge_settings['ArrowSize']
         )
       end
     end
-    @dag
+    @dag.output(file_format.to_sym => file_path)
   end
 
   private
-
-  def feature_attributes(story)
-    {
-      label: node_label(story),
-      fontsize: (story['estimate'] || 3) * 2 + 25,
-      fontname: "Verdana",
-      style: :filled,
-      shape: :record,
-      fillcolor: node_color(story),
-    }
-  end
-
-  def bug_attributes(story)
-    feature_attributes(story).merge(fillcolor: "red")
-  end
-
-  def release_attributes(story)
-    feature_attributes(story).merge(
-      label: node_title(story),
-      shape: :circle,
-      fillcolor: story['current_state'] == "accepted" ? node_color(story) : "maroon",
-      fontname: "Comic Sans MS",
-    )
-  end
-
-  def chore_attributes(story)
-    feature_attributes(story)
-  end
 
   def node_title(story)
     title = story['name']
@@ -115,7 +79,7 @@ class PivotalDag
 
       #{story['id']}
 
-      #{find_owners(story).join(", ")}
+      #{find_owners(story).join(', ')}
 
       Points: #{story['estimate']}
     LABEL
@@ -150,5 +114,37 @@ class PivotalDag
       #{story_states.map { |story| key_line.call(story) }.join('\n')}
     LABEL
     @dag.add_node("Key", label: label, color: "white", fontsize: 40, fontname: "Verdana")
+  end
+
+  def parse_config(yml)
+    @pivotal_settings ||= yml['PivotalSettings']
+    @output_sttings   ||= yml['OutputSettings']
+    @graph_settings   ||= yml['GraphSettings']
+    @node_settings    ||= yml['NodeSettings']
+    @edge_settings    ||= yml['EdgeSettings']
+  end
+
+  def node_attributes(story)
+    attribute_name = case story['story_type']
+    when 'feature'
+      'FeatureAttributes'
+    when 'bug'
+      'BugAttributes'
+    when 'release'
+      'ReleaseAttributes'
+    when 'chore'
+      'ChoreAttributes'
+    else
+      raise "Invalid node_type: #{node_type}"
+    end
+    attrs = @node_settings[attribute_name]
+    {
+      label: attrs['Label'] || node_label(story),
+      fontsize: attrs['FontSize'] || (story['estimate'] || 3) * 2 + 25,
+      fontname: attrs['FontType'],
+      style: attrs['Style'],
+      shape: attrs['Shape'],
+      fillcolor: attrs['FillColor'] || node_color(story),
+    }
   end
 end
