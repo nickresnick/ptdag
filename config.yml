@@ -7,7 +7,7 @@ PivotalSettings:
 
 OutputSettings:
   FileFormat: pdf
-  FilePath: ~/graph_test.pdf
+  FilePath: generated_dags/graph_test.pdf
 
 # Description:
 # - GraphLabel, if null, defaults to "Graph For (epic_name || project_id)"
