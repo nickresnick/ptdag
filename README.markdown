@@ -1,9 +1,11 @@
 # Description
-ptdag is an application that generates [directed acyclic graph]https://en.wikipedia.org/wiki/Directed_acyclic_graph) visualizations for PivotalTracker projects or epics.
+ptdag is an application for generating [directed acyclic graph](https://en.wikipedia.org/wiki/Directed_acyclic_graph) visualizations of PivotalTracker projects or epics.
 
-At [custora](https://custora.com/), we use [PivotalTracker](https://www.pivotaltracker.com) to scope and plan engineering projects across frontend/backend development, as well as data science. One thing that always frustrated me about Pivotal (besides the entire UI), is that it's hard to visualize certain aspects of a project: How big is the scope? Where are the bottlenecks? Are there any unhashed dependencies? Where can we parallelize tasks?
+At [custora](https://custora.com/), we use [PivotalTracker](https://www.pivotaltracker.com) to scope, plan, and manage engineering projects across our software development and data science teams. One thing that always frustrated me about Pivotal is that it's really hard to grasp certain aspects of a project from the UI: How big is the scope of the project? Where are the bottlenecks? Are there any unhashed dependencies? Can we parallelize tasks?
 
-I built ptdag to help answer these questions. Each node in the graph represents a pivotal story, and each edge that points from node A to node B signifies that node B depends on the completion of node A.
+I built ptdag to help answer these questions. Each node in the graph represents a pivotal story, and each edge that points from node A to node B signifies that node B depends on the completion of node A. The app includes features for scaling the size of the node based on the amount of points on the story, as well as color encoding based on story status and story type.
+
+ptdag runs on the robust [GraphViz](http://www.graphviz.org/) infrastructure through the [ruby-graphviz gem](https://github.com/glejeune/Ruby-Graphviz). I recommend looking through the examples directory of that gem for some cool implementations of graph visualizations.
 
 # Generating a Graph
 Generating a graph is easy. All you need is...
