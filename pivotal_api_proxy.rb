@@ -20,7 +20,7 @@ class PivotalApiProxy
   end
 
   def get_stories(epic_name)
-    get("projects/#{project_id}/stories", epic_name ? { "filter" => "epic:\"#{epic_name}\""} : {})
+    get("projects/#{project_id}/stories", epic_name ? { "filter" => "epic:\"#{epic_name}\"" } : {})
   end
 
   def get_blockers(story_id)
