@@ -14,7 +14,7 @@ class PivotalApiProxy
     end
 
     @people = get("my/people?project_id=#{@project_id}")
-    if @people['code'] == "unrecognized_operation"
+    if @people['code'] == "unauthorized_operation"
       raise "Error: Bad project ID: " + @pesona['possible_fix']
     end
 
