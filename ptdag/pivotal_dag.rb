@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require "./pivotal_api_proxy"
+require "./ptdag/pivotal_api_proxy"
 require 'ruby-graphviz'
 class PivotalDag
   attr_accessor :stories, :vertices, :dag

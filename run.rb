@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require './pivotal_dag'
+require './ptdag/pivotal_dag'
 # Need to use ERB to evaluate the FilePath field
 config = YAML.safe_load(ERB.new(File.read('./config.yml')).result)
 
