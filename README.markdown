@@ -5,7 +5,7 @@ At [custora](https://custora.com/), we use Pivotal to scope, plan, and manage en
 
 I built ptdag to help answer these questions. Each node in the graph represents a pivotal story, and each edge that points from node A to node B signifies that node B depends on the completion of node A. The app includes features for scaling the size of the node based on the amount of points on the story, as well as color encoding based on story type and status.
 
-ptdag runs on the robust [GraphViz](http://www.graphviz.org/) infrastructure through the [ruby-graphviz gem](https://github.com/glejeune/Ruby-Graphviz) gem. I recommend looking through the `examples` directory of that gem for some cool implementations of graph visualizations.
+ptdag runs on the robust [GraphViz](http://www.graphviz.org/) infrastructure through the [ruby-graphviz](https://github.com/glejeune/Ruby-Graphviz) gem. I recommend looking through the `examples` directory of that gem for some cool implementations of graph visualizations.
 
 # Generating a Graph
 Generating a graph is easy. All you need is...
