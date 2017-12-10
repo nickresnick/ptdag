@@ -36,9 +36,10 @@ in the ptdag directory. This will create a file according to the file format and
 file path you entered in config.yml.
 
 # Example
-Here's an example of a graph I generated from a real project I was working on at custora (the graph name, story titles, and story ids have been replaces/randomized):
+Here's a graph I generated from a real project I was working on at custora. The graph name, story titles, and story ids have been replaces/randomized, but otherwise this is a good example of the ptdag output:
 
 ![alt text](https://github.com/nickresnick/ptdag/blob/master/pivotal_dag_201712101455)
+
 # Specs and Dependencies
 Generated automatically by bundler (see Gemfile.lock)
 ```
