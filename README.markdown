@@ -3,7 +3,7 @@ ptdag is an application for generating [directed acyclic graph](https://en.wikip
 
 At [custora](https://custora.com/), we use Pivotal to scope, plan, and manage engineering projects across our software development and data science teams. One thing that always frustrated me about Pivotal is that it's really hard to grasp certain aspects of a project from the UI: How big is the scope? Where are the bottlenecks? Are there any unhashed dependencies? Can we parallelize tasks?
 
-I built ptdag to help answer these questions. Each node in the graph represents a pivotal story, and each edge that points from node A to node B signifies that node B depends on the completion of node A. The app includes features for scaling the size of the node based on the amount of points on the story, as well as color encoding based on story type and status.
+ptdag was built to help answer these questions. Each node in the graph represents a pivotal story, and each edge that points from node A to node B signifies that node B depends on the completion of node A. The app includes features for scaling the size of the node based on the amount of points on the story, as well as color encoding based on story type and status.
 
 ptdag runs on the robust [GraphViz](http://www.graphviz.org/) infrastructure through the [ruby-graphviz](https://github.com/glejeune/Ruby-Graphviz) gem. I recommend looking through the `examples` directory of that gem for some cool implementations of graph visualizations.
 
@@ -36,7 +36,7 @@ in the ptdag directory. This will create a file according to the file format and
 file path you entered in config.yml.
 
 # Example
-Here's a graph I generated from a real project I was working on at custora. The graph name, story titles, and story ids have been replaces/randomized, but otherwise this is a good example of the ptdag output:
+Here's a graph I generated from a real project I worked on at custora (the graph name, story titles, and story ids have been replaced/randomized):
 
 ![alt text](https://github.com/nickresnick/ptdag/blob/master/pivotal_dag_201712101455)
 

@@ -8,7 +8,7 @@ PivotalSettings:
 # By default, append the year-month-day-hour-minute of generation to the file
 OutputSettings:
   FileFormat: pdf
-  FilePath: <%= "generated_dags/pivotal_dag_#{Time.now.strftime("%Y%m%d%H%M")}.pdf" %>
+  FilePath: <%= "generated_dags/pivotal_dag_#{Time.now.strftime("%Y%m%d%H%M")}" %>
 
 # Description:
 # - GraphLabel, if null, defaults to "Graph For (epic_name || project_id)"
@@ -20,7 +20,7 @@ GraphSettings:
   IncludeKey: true
   GraphLabel: null
   LabelLocation: t
-  FontSize: 60
+  FontSize: 100
   FontType: Verdana
   NodeSeparation: 2
   RankSeparation: 2
@@ -57,7 +57,7 @@ NodeSettings:
     FontType: Verdana
     Style: filled
     Shape: circle
-    FillColor: null
+    FillColor: maroon
   ChoreAttributes:
     Label: null
     FontSize: null

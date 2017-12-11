@@ -74,11 +74,11 @@ class PivotalDag
     <<~LABEL
       #{node_title(story)}
 
-      #{story['id']}
+      Story ID: #{story['id']}
 
-      #{find_owners(story).join(', ')}
+      Owner(s): #{find_owners(story).join(', ')}
 
-      Points: #{story['estimate']}
+      #{story['story_type'] == 'feature' ? 'Points: ' + story['estimate'].to_s : ''}
     LABEL
   end
 
